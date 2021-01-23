@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Serializer\Annotation\Ignore;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -31,6 +31,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Ignore()
      */
     private $password;
 
@@ -93,6 +94,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $couleur;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasCompletedInformations = false;
 
     public function getId(): ?int
     {
@@ -363,4 +374,37 @@ class User implements UserInterface
     {
         $this->couleur = $couleur;
     }
+
+    /**
+     * @return bool
+     */
+    public function isHasCompletedInformations(): bool
+    {
+        return $this->hasCompletedInformations;
+    }
+
+    /**
+     * @param bool $hasCompletedInformations
+     */
+    public function setHasCompletedInformations(bool $hasCompletedInformations): void
+    {
+        $this->hasCompletedInformations = $hasCompletedInformations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
 }
